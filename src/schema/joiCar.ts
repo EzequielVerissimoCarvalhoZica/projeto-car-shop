@@ -1,6 +1,7 @@
 import Joi from 'joi';
 
 export default Joi.object({
+  _id: Joi.string(),
   model: Joi.string().required().min(3)
     .messages({
       'any.required': '400|Model is required',
