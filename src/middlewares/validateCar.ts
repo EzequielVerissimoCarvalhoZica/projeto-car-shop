@@ -6,7 +6,6 @@ export default (req: Request, res: Response, next: NextFunction) => {
   const { body } = req;
 
   const { error } = joiCar.validate({ ...body });
-  console.log();
 
   if (error) {
     const [code, message] = error.message.split('|');
