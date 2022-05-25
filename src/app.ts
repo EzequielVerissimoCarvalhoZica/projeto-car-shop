@@ -9,7 +9,6 @@ class App {
   constructor() {
     this.app = express();
     this.app.use(express.json());
-    this.app.use(error);
   }
 
   public startServer(PORT: string | number = 3001): void {
@@ -22,6 +21,7 @@ class App {
 
   public addRouter(router: Router) {
     this.app.use(router);
+    this.app.use(error);
   }
 
   public getApp() {
