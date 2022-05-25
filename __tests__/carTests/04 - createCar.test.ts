@@ -87,6 +87,8 @@ describe('04 - Crie uma rota para o endpoint /cars onde seja possível cadastrar
     const res = await request(server.getApp())
       .post('/cars')
       .send(carMock.validCar);
+
+    // console.log(res)
     expect(res.statusCode).toEqual(201);
   });
 });
