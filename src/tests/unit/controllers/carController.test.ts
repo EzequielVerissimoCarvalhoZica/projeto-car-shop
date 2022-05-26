@@ -4,7 +4,6 @@ import chaiHttp = require('chai-http');
 import CarModel from '../../../models/CarModel';
 import server from '../../../server';
 
-
 chai.use(chaiHttp);
 
 const { expect } = chai;
@@ -32,26 +31,26 @@ describe('Test car controller', () => {
   const carModel = new CarModel();
 
   describe(('Create car'), () => {
+    let response: Response;
 
     before(async () => {
       Sinon.stub(carModel.model, 'create').resolves(carMock);
+
+      response = await chai
+      .request(server.getApp())
+      .post('/cars')
+      .send(carCreate)
+      .then(res => res) as Response;
     });
   
     after(()=>{
       Sinon.restore();
     })
-  
-    it('Return error', async () => {
-      
-      await chai
-      .request(server.getApp())
-      .post('/cars')
-      .send(carCreate)
-      .then(res => {
-        expect(res).to.have.status(201);
-        expect(res.body).to.deep.equal(carMock);
-      });
-
+    it('Create successful return status 201', async () => {
+      expect(response).to.have.status(201);
+    });
+    it('Create successful return car created', async () => {
+      expect(response.body).to.deep.equal(carMock);
     });
   })
 
