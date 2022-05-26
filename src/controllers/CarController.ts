@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { Car } from '../interfaces/CarInterface';
 import CarService from '../services/CarService';
 
-interface RequestWithBody extends Request {
+export interface RequestWithBody extends Request {
   body: Car;
 }
 

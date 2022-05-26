@@ -2,7 +2,7 @@ import { Document, Schema, model as createModel } from 'mongoose';
 import { Car } from '../interfaces/CarInterface';
 import { Model as ModelInterface } from '../interfaces/ModelInterface';
 
-interface CarDocument extends Car, Document {}
+export interface CarDocument extends Car, Document {}
 
 const carSchema = new Schema<CarDocument>({
   model: String,
@@ -21,6 +21,10 @@ class CarModel implements ModelInterface<Car> {
     const car = await this._model.create({ ...obj });
   
     return car;
+  }
+
+  get model() {
+    return this._model;
   }
 
   // static read(): Promise<Car[]> {
