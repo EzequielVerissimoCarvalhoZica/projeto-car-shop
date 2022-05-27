@@ -27,9 +27,11 @@ class CarModel implements ModelInterface<Car> {
     return this._model;
   }
 
-  // static read(): Promise<Car[]> {
-  //   throw new Error('Method not implemented.');
-  // }
+  async read(): Promise<Car[]> {
+    const cars = await this._model.find();
+
+    return cars;
+  }
 
   // static readOne(id_: string): Promise<Car | null> {
   //   console.log(id_);
