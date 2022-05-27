@@ -15,4 +15,10 @@ export default class CarService {
 
     return cars;
   }
+
+  async readOne(id_: string): Promise<Car | null> {
+    const car = await this._CarModel.readOne(id_);
+
+    return car;
+  }
 }
