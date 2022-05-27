@@ -9,4 +9,10 @@ export default class CarService {
   
     return car;
   }
+
+  async read(): Promise<Car[]> {
+    const cars = await this._CarModel.read();
+
+    return cars;
+  }
 }
