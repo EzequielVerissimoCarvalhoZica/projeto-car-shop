@@ -18,7 +18,8 @@ export default class CarsRouter {
   ) {
     this.router
       .route(route)
-      .post(this._validateCar, carController.create);
+      .post(this._validateCar, carController.create)
+      .get(carController.read);
   }
 
   // intializeRoutes = () => {
