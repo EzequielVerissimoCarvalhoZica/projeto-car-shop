@@ -17,6 +17,10 @@ export default class CarsRouter {
     route: string = carController.route,
   ) {
     this.router
+      .route(`${route}/:id`)
+      .get(carController.readOne);
+
+    this.router
       .route(route)
       .post(this._validateCar, carController.create)
       .get(carController.read);
