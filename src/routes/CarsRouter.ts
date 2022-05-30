@@ -1,12 +1,14 @@
 import { Router } from 'express';
 import CarController from '../controllers/CarController';
-import validateCar from '../middlewares/validateCar';
+import validateCreateCar from '../middlewares/validateCreateCar';
+import validateUpdateCar from '../middlewares/validateUpdateCar';
 
 export default class CarsRouter {
   public router: Router;
 
   constructor(
-    private _validateCar = validateCar,
+    private _validateCreateCar = validateCreateCar,
+    private _validateUpdateCar = validateUpdateCar,
   ) {
     this.router = Router();
   }
@@ -18,11 +20,11 @@ export default class CarsRouter {
     this.router
       .route(`${route}/:id`)
       .get(carController.readOne)
-      .put(carController.update);
+      .put(this._validateUpdateCar, carController.update);
 
     this.router
       .route(route)
-      .post(this._validateCar, carController.create)
+      .post(this._validateCreateCar, carController.create)
       .get(carController.read);
   }
 }
