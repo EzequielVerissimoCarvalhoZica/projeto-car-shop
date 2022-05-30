@@ -1,15 +1,13 @@
 import { NextFunction, Request, Response } from 'express';
 import { Car } from '../interfaces/CarInterface';
 import CarService from '../services/CarService';
-import HttpException from '../schema/HttpException';
+import ValidRequest from '../schema/ValidRequest';
 
 export interface RequestWithBody extends Request {
   body: Car;
 }
 
 export default class CarController {
-  static _httpException: HttpException;
-
   constructor(
     private _CarService = new CarService(),
     private _route = '/cars',
@@ -34,18 +32,31 @@ export default class CarController {
   readOne = async (req: Request, res: Response, next: NextFunction) => {
     const { id } = req.params;
 
-    if (id.length !== 24) {
-      return next(
-        new HttpException(400, 'Id must have 24 hexadecimal characters'),
-      );
-    }
+    const validRequest = new ValidRequest();
+
+    validRequest.validIdLength(id, next);
 
     const car = await this._CarService.readOne(id);
 
-    if (!car) {
-      return next(new HttpException(404, 'Object not found'));
-    }
+    validRequest.objectNotFound(car, next);
 
+    return res.status(200).json(car);
+  };
+
+  update = async (req: RequestWithBody, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+    const { body } = req;
+
+    const validRequest = new ValidRequest();
+
+    validRequest.validEmptyObj(body, next);
+
+    validRequest.validIdLength(id, next);
+    
+    const car = await this._CarService.update(id, { ...body });
+
+    validRequest.objectNotFound(car, next);
+    
     return res.status(200).json(car);
   };
 }
