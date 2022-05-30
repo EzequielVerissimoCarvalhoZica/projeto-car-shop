@@ -47,11 +47,13 @@ class CarModel implements ModelInterface<Car> {
     return car;
   }
 
-  // static delete(id_: string): Promise<Car | null> {
-  //   console.log(id_);
+  async delete(id_: string): Promise<Car | null> {
+    const car = await this
+      ._model
+      .findByIdAndDelete(id_);
 
-  //   throw new Error('Method not implemented.');
-  // }
+    return car;
+  }
 }
 
 export default CarModel;
