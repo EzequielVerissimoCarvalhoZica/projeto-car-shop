@@ -39,11 +39,13 @@ class CarModel implements ModelInterface<Car> {
     return car;
   }
 
-  // static update(id_: string, obj: Car): Promise<Car | null> {
-  //   console.log(id_, obj);
-    
-  //   throw new Error('Method not implemented.');
-  // }
+  async update(id_: string, obj: Car): Promise<Car | null> {
+    const car = await this
+      ._model
+      .findByIdAndUpdate(id_, { ...obj }, { new: true });
+
+    return car;
+  }
 
   // static delete(id_: string): Promise<Car | null> {
   //   console.log(id_);
