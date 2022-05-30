@@ -1,7 +1,6 @@
 import { NextFunction } from 'express';
 import { Car } from '../interfaces/CarInterface';
 import HttpException from './HttpException';
-import validIdLength from './validIdLength';
 
 export default class ValidRequest {
   private _message: string;
@@ -13,17 +12,8 @@ export default class ValidRequest {
     this._status = 0;
   }
 
-  validEmptyObj(body: object, next: NextFunction) {
-    if (Object.keys(body).length === 0 && body.constructor === Object) {
-      this._message = 'Body cannot be empty';
-      this._status = 400;
-
-      return this.response(next);
-    }
-  }
-
   validIdLength(id: string, next: NextFunction) {
-    if (!validIdLength(id)) {
+    if (!ValidRequest.validIdLength(id)) {
       this._message = 'Id must have 24 hexadecimal characters';
       this._status = 400;
 
@@ -38,6 +28,12 @@ export default class ValidRequest {
 
       return this.response(next);
     }
+  }
+
+  static validIdLength(id: string) {
+    if (id.length !== 24) return false;
+  
+    return true;
   }
 
   response(next: NextFunction) {
