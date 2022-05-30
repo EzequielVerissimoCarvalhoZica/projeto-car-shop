@@ -21,4 +21,10 @@ export default class CarService {
 
     return car;
   }
+
+  async update(id_: string, obj: Car): Promise<Car | null> {
+    const car = await this._CarModel.update(id_, { ...obj });
+  
+    return car;
+  }
 }
