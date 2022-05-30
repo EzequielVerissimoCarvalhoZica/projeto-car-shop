@@ -57,4 +57,18 @@ export default class CarController {
     
     return res.status(200).json(car);
   };
+
+  delete = async (req: Request, res: Response, next: NextFunction) => {
+    const { id } = req.params;
+
+    const validRequest = new ValidRequest();
+
+    validRequest.validIdLength(id, next);
+    
+    const car = await this._CarService.delete(id);
+
+    validRequest.objectNotFound(car, next);
+    
+    return res.status(204).end();
+  };
 }
