@@ -27,4 +27,10 @@ export default class CarService {
   
     return car;
   }
+
+  async delete(id_: string): Promise<Car | null> {
+    const car = await this._CarModel.delete(id_);
+  
+    return car;
+  }
 }
