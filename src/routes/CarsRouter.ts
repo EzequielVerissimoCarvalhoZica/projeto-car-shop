@@ -9,7 +9,6 @@ export default class CarsRouter {
     private _validateCar = validateCar,
   ) {
     this.router = Router();
-    // this.intializeRoutes();
   }
 
   public addRoute(
@@ -18,17 +17,12 @@ export default class CarsRouter {
   ) {
     this.router
       .route(`${route}/:id`)
-      .get(carController.readOne);
+      .get(carController.readOne)
+      .put(carController.update);
 
     this.router
       .route(route)
       .post(this._validateCar, carController.create)
       .get(carController.read);
   }
-
-  // intializeRoutes = () => {
-  //   this.router
-  //     .route(this._route)
-  //     .post(this._validateCar, this._CarController.create);
-  // };
 }
