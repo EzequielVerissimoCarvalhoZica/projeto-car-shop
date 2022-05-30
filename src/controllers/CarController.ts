@@ -49,8 +49,6 @@ export default class CarController {
 
     const validRequest = new ValidRequest();
 
-    validRequest.validEmptyObj(body, next);
-
     validRequest.validIdLength(id, next);
     
     const car = await this._CarService.update(id, { ...body });
