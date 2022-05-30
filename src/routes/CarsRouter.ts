@@ -20,7 +20,8 @@ export default class CarsRouter {
     this.router
       .route(`${route}/:id`)
       .get(carController.readOne)
-      .put(this._validateUpdateCar, carController.update);
+      .put(this._validateUpdateCar, carController.update)
+      .delete(carController.delete);
 
     this.router
       .route(route)
